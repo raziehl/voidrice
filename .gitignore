@@ -5,6 +5,7 @@
 # But Not These Files
 !.xmonad/*
 !.config/xmobar/*
+!.xmobarrc
 !.ackrc
 !.vivaldi-custom.css
 !.bookmarkedProgs
