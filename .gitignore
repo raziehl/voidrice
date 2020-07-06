@@ -3,7 +3,7 @@
 !*/
 .notes
 # But Not These Files
-!.xmonad
+!.xmonad/*
 !.config/xmobar/*
 !.ackrc
 !.vivaldi-custom.css
