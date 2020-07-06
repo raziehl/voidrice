@@ -1,0 +1,3 @@
+
+alias sner-node="node ~/.config/scripts/node/src/simple-http-listener.js"
+

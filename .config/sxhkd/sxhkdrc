@@ -205,7 +205,11 @@ super + {g,semicolon}
 	bspc desktop {prev,next}.occupied --focus
 super + {Prior,Next}
 	bspc desktop {prev,next}.occupied --focus
-super + {Tab,backslash}
+super + Tab
+	bspc desktop next.occupied --focus
+super + shift + Tab
+	bspc desktop prev.occupied --focus
+super + backslash
 	bspc desktop last --focus
 
 # focus or swap the next node

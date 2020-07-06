@@ -1,0 +1,16 @@
+#!/bin/bash
+
+windowPID=$(zenity --list --column PID --column Window --title OpenWindows --multiple --list $(listWindows) --width=600 --height=400)
+
+tmp=$(xdotool search --pid $windowPID)
+
+windowIDs=($tmp)
+
+windowName=$(xdotool getwindowname ${windowIDs[0]})
+
+echo $windowPID
+
+if zenity --question --title Destroy --text $windowName
+then
+  kill -9 $windowPID
+fi

@@ -1,0 +1,75 @@
+# Ignore Everything
+*
+!*/
+.notes
+# But Not These Files
+!.xmonad
+!.config/xmobar/*
+!.ackrc
+!.vivaldi-custom.css
+!.bookmarkedProgs
+!.gitignore
+!.stylus.json
+!.i3/*
+!.icons/**
+!.themes/**
+!.config/gtk-3.0/settings.ini
+!.config/i3status/*
+!.config/i3blocks/*
+!.config/dunst/*
+!.config/mimeapps.list
+!.config/sxhkd/sxhkdrc
+!.layouts/*
+!.Xresources
+!.bashrc
+!.profile
+!.vimrc
+!.utilist
+!.config/compton.conf
+!.config/ranger/*
+!.config/scripts/**
+!.config/flashfocus/*
+!.config/zathura/*
+#!.config/scripts/node/*
+!.vim/autoload/*
+!.vim/bundle
+!Templates/webStyles.json
+!.setupNotes
+!.scimrc
+!.dmenurc
+!.config/mimeapps.list.mine
+!.config/gotop/*
+!.config/Xresources-themes/*
+!.nustall_history
+!.config/rc-libs/*
+!.sounds/*
+!.sounds/tiberian/*
+!.zshrc
+# Ignore These Though
+# .config
+.cache
+.cache/*
+.vim/plugged
+.fzf
+.vscode-oss
+.vscode-oss/*
+.vscode-oss/extensions/
+AndroidStudioProjects/*
+AndroidStudioProjects
+.config/Code - OSS
+.config/Code - OSS/*
+.cargo
+.cargo/*
+.local/*
+go
+# i added these using echo | ls >> .gitignore
+# urban-octo-potato
+Desktop
+Documents
+Downloads
+Music
+Pictures
+Public
+
+Videos
+# Although these are ok :)) lol

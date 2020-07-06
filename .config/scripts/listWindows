@@ -1,0 +1,9 @@
+#!/bin/bash
+
+idList=$(xdotool search --all --desktop $(xprop -notype -root _NET_CURRENT_DESKTOP | cut -c 24-) "" 2>/dev/null)
+
+for id in $idList; do
+  name=$(xdotool getwindowname $id)
+  pid=$(xdotool getwindowpid $id)
+  echo $pid  $(echo $name | tr " " "-")
+done

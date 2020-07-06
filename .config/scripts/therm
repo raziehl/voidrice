@@ -1,0 +1,11 @@
+# cp ~/.config/Xresources-themes/$1 ~/.config/Xresources-themes/ACTIVE-THEME -f &&
+
+PS3='Please enter your choice: '
+select opt in ~/.config/Xresources-themes/*
+do
+  cp $opt ~/.config/Xresources-themes/ACTIVE-THEME -f &&
+  xrdb ~/.Xresources &&
+  echo $opt >> ~/.config/Xresources-themes/ACTIVE-NAME
+  break
+done
+
