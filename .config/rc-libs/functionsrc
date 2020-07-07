@@ -1,0 +1,85 @@
+
+# Aliases
+alias gotop="gotop -c mine"
+# alias feh="feh --scale-down --auto-zoom"
+alias feh="feh --edit"
+
+#alias ls="ls -l --color=auto | grep '^d' && ls -l --color=auto | grep -v '^d'"
+alias ls="ls -l --color=auto -h --group-directories-first"
+
+alias iftop="sudo iftop -P -i wlp2s0"
+
+alias gource="gource -b 000000"
+alias recompton="pkill compton && nohup compton &"
+
+alias code="code --enable-proposed-api GitHub.vscode-pull-request-github"
+
+alias git-cred="git config --global credential.helper store && git pull"
+
+if command -v nvim > /dev/null 2>&1; then
+        export EDITOR='nvim'
+        alias vim="nvim"
+else
+        export EDITOR='vim'
+fi
+
+alias pqiv="pqiv -c -i"
+alias less="less -r"
+alias grep="grep --color=always" 
+
+alias static='P=( " " █ ░ ▒ ▓ );while :;do printf "\e[$[RANDOM%LINES+1];$[RANDOM%COLUMNS+1]f${P[$RANDOM%5]}";done|lolcat'
+
+# Functions
+latex-rmd() {
+  find . -name '*.rmd' | entr echo "require(rmarkdown); try(render('$(find . -name *.rmd)'))" | R --vanilla
+}
+
+pywatch() {
+  echo $1 &&
+  find | entr python $1
+}
+
+# Xresource-theme
+xtheme() {
+        yes | cp ~/.config/Xresources-themes/$1.Xresources ~/.config/Xresources-themes/ACTIVE-THEME &&
+        xrdb ~/.Xresources &&
+        echo $1 >> ~/.config/Xresources-themes/ACTIVE-NAME
+}
+
+matrix() {
+        unimatrix -l cCaAgGknnnsS -s 95
+}
+
+# NuStall
+nustall() {
+        yay $1 &&
+        echo $1 >> ~/.nustall_history
+}
+
+# GitGraph
+gitgraph() {
+        git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+}
+
+# Make history be saved after every command
+export PROMPT_COMMAND='history -a'
+
+# Ctrl+Backspace
+
+compile() {
+        g++ -w $1 &&
+        ./a.out
+}
+
+javarun() {
+	java $@ 
+#	javac $1
+}
+
+# No ctrl+s terminal lock
+stty -ixon
+
+hdmi2-b-up() {
+        xrandr --output HDMI2 --brightness 1.2
+}
+

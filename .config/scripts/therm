@@ -4,7 +4,7 @@ PS3='Please enter your choice: '
 select opt in ~/.config/Xresources-themes/*
 do
   cp $opt ~/.config/Xresources-themes/ACTIVE-THEME -f &&
-  xrdb ~/.Xresources &&
+  xrdb ~/.Xresources || xrdb ~/.config/Xresources &&
   echo $opt >> ~/.config/Xresources-themes/ACTIVE-NAME
   break
 done

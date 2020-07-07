@@ -12,7 +12,7 @@ export PATH=$PATH:/home/raziel/.config/scripts
 
 # Default programs:
 # export EDITOR="nvim"
-export TERMINAL="st"
+export TERMINAL="urxvt"
 export BROWSER="brave"
 export READER="zathura"
 

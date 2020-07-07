@@ -1,0 +1,16 @@
+#!/bin/zsh
+
+# Load version control information
+autoload -Uz vcs_info
+precmd() { vcs_info }
+
+# Format the vcs_info_msg_0_ variable
+zstyle ':vcs_info:git:*' formats '[%b]'
+
+# Set up the prompt (with git branch name)
+setopt PROMPT_SUBST
+
+PS1="%B%{$fg[red]%}[%{$fg[magenta]%}%n%{$fg[green]%}@%{$fg[cyan]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]\$vcs_info_msg_0_%{$reset_color%}:%b "
+#PROMPT="%n@%m[%~]"
+#RPROMPT=\$vcs_info_msg_0_
+
