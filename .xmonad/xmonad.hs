@@ -18,7 +18,11 @@ import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
+import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import System.IO
+import XMonad.Config.Desktop
+
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -53,8 +57,16 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 
+xmobarEscape = concatMap doubleLts
+  where doubleLts '<' = "<<"
+        doubleLts x   = [x]
+
+myWorkspaces = clickable . (map xmobarEscape) $ ["1","2","3","4","5", "6", "7", "8", "9"]
+  where
+         clickable l = [ "<action=xdotool key alt+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
+                             (i,ws) <- zip [1..9] l,
+                            let n = i ]
 -- Border colors for unfocused and focused windows, respectively.
 --
 myNormalBorderColor  = "#dddddd"
@@ -94,7 +106,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask .|. shiftMask, xK_Left),  shiftToPrev)
     , ((modm,               xK_z),     toggleWS)
 
-    
+
 
     -- Move focus to the next window
     , ((modm,               xK_j     ), windows W.focusDown)
@@ -227,7 +239,10 @@ myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
     , resource  =? "desktop_window" --> doIgnore
-    , resource  =? "kdesktop"       --> doIgnore ]
+    , resource  =? "kdesktop"       --> doIgnore
+    , className =? "Gimp"     --> doFloat
+    , className =? "rdesktop" --> doFloat
+    ]
 
 ------------------------------------------------------------------------
 -- Event handling
@@ -263,6 +278,9 @@ myStartupHook = return ()
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
+
+
+
 main = do
   xmproc <- spawnPipe "xmobar -x 0"
   xmonad $ docks defaults
@@ -290,7 +308,7 @@ defaults = def {
 
       -- hooks, layouts
         layoutHook         = myLayout,
-        manageHook         = myManageHook,
+        manageHook         = manageDocks <+> myManageHook <+> manageHook desktopConfig,
         handleEventHook    = myEventHook,
         logHook            = myLogHook,
         startupHook        = myStartupHook

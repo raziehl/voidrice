@@ -1,4 +1,4 @@
-#!/bin/zsh
+
 
 # zsh profile file. Runs on login. Environmental variables are set here.
 
@@ -15,6 +15,7 @@ export PATH=$PATH:/home/raziel/.config/scripts
 export TERMINAL="urxvt"
 export BROWSER="brave"
 export READER="zathura"
+
 
 # ~/ Clean-up:
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -144,3 +145,5 @@ fi
 
 # Switch escape and caps if tty and no passwd required:
 sudo -n loadkeys ${XDG_DATA_HOME:-$HOME/.local/share}/larbs/ttymaps.kmap 2>/dev/null
+
+source /usr/share/nvm/init-nvm.sh

@@ -18,6 +18,11 @@
 # Comment/uncomment these lines depending on what wm you want to use. Also
 # check the i3blocks line above.
 # ssh-agent dwm
-xmonad
+
+trayer --align right --SetDockType true --SetPartialStrut true --expand true --width 10 --transparent true --alpha 70 --height 17 --tint 0x000000 &
+nm-applet &
+volumeicon &
+
+exec xmonad
 
 # ssh-agent i3

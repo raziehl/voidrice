@@ -4,14 +4,15 @@ Config {
      font =         "xft:Bitstream Vera Sans Mono:size=9:bold:antialias=true"
    , bgColor =      "black"
    , fgColor =      "#646464"
-   , position =     Bottom
-   , border =       BottomB
+   , position =     BottomW L 90 
+  --  , border =       BottomB
    , borderColor =  "#646464"
+   , alpha =        700
 
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%battery% | %multicpu% | %coretemp% | %memory% | %dynnetwork% }{ %RJTT% | %date% || %kbd% "
+   , template = "%StdinReader% }{ %kbd% | %dynnetwork% | %memory% |%battery% | %date% "
 
    -- general behavior
    , lowerOnStart =     False    -- send to bottom of window stack on start
@@ -20,5 +21,19 @@ Config {
    , overrideRedirect = True    -- set the Override Redirect flag (Xlib)
    , pickBroadest =     False   -- choose widest display (multi-monitor)
    , persistent =       True    -- enable/disable hiding (True = disabled)
+
+   , commands = 
+      [ Run DynNetwork     [ "--template" , "<dev>: <tx>kB/s_<rx>kB/s"
+                             , "--Low"      , "1000"       -- units: B/s
+                             , "--High"     , "5000"       -- units: B/s
+                             , "--low"      , "darkgreen"
+                             , "--normal"   , "darkorange"
+                             , "--high"     , "darkred"
+                             ] 10
+        , Run Kbd            [ ("us(dvorak)" , "<fc=#00008B>DV</fc>")
+                             , ("us"         , "<fc=#8B0000>US</fc>")
+                             ]
+        ]
+      ] 
 
    }

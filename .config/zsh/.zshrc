@@ -6,6 +6,8 @@ source ~/.config/rc-libs/prompt-zsh
 setopt autocd		# Automatically cd into typed directory.
 stty stop undef		# Disable ctrl-s to freeze terminal.
 
+alias terminal="$TERMINAL"
+
 # History in cache directory:
 HISTSIZE=10000
 SAVEHIST=10000
