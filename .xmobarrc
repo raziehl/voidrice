@@ -4,7 +4,7 @@ Config {
      font =         "xft:Bitstream Vera Sans Mono:size=9:bold:antialias=true"
    , bgColor =      "black"
    , fgColor =      "#646464"
-   , position =     BottomW L 90 
+   , position =     BottomW L 90
   --  , border =       BottomB
    , borderColor =  "#646464"
    , alpha =        700
@@ -12,7 +12,7 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%StdinReader% }{ %kbd% | %dynnetwork% | %memory% |%battery% | %date% "
+   , template = "%UnsafeStdinReader% }{ %kbd% | %dynnetwork% | %memory% |%battery% | %date% "
 
    -- general behavior
    , lowerOnStart =     False    -- send to bottom of window stack on start
@@ -22,7 +22,7 @@ Config {
    , pickBroadest =     False   -- choose widest display (multi-monitor)
    , persistent =       True    -- enable/disable hiding (True = disabled)
 
-   , commands = 
+   , commands =
       [ Run DynNetwork     [ "--template" , "<dev>: <tx>kB/s_<rx>kB/s"
                              , "--Low"      , "1000"       -- units: B/s
                              , "--High"     , "5000"       -- units: B/s
@@ -34,6 +34,6 @@ Config {
                              , ("us"         , "<fc=#8B0000>US</fc>")
                              ]
         ]
-      ] 
+      ]
 
    }
