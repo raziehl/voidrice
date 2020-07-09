@@ -53,7 +53,7 @@ mydefaults = def {
         , borderWidth         = 0
         , layoutHook          = myLayoutHook
         , startupHook         = myStartupHook
-        , manageHook          = myManageHook
+        , manageHook          = manageDocks <+> myManageHook <+> manageHook desktopConfig
         , handleEventHook     = fullscreenEventHook <+> docksEventHook <+> minimizeEventHook
         }
 
@@ -111,10 +111,10 @@ myManageHook = composeAll . concat $
 
 -- keys config
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
-  [ ((modMask .|. shiftMask , xK_d ), spawn $ "dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'")
-  , ((modMask .|. shiftMask , xK_r ), spawn $ "xmonad --recompile && xmonad --restart")
+  [ ((modMask, xK_d ), spawn $ "dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'")
+  , ((modMask, xK_c ), spawn $ "xmonad --recompile && xmonad --restart")
   , ((modMask .|. shiftMask , xK_q ), kill)
-  , ((modMask .|. shiftMask , xK_x ), io (exitWith ExitSuccess))
+  , ((modMask .|. shiftMask , xK_c ), io (exitWith ExitSuccess))
   , ((modMask, xK_f), sendMessage $ Toggle NBFULL)
   , ((modMask, xK_Return), spawn $ "urxvt" )
 
@@ -156,22 +156,19 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   --  XMONAD LAYOUT KEYS
 
   -- Cycle through the available layout algorithms.
-  , ((modMask, xK_space), sendMessage NextLayout)
+  , ((modMask, xK_t), sendMessage NextLayout)
 
-  --Focus selected desktop
-  , ((mod1Mask, xK_Tab), nextWS)
-
-  --Focus selected desktop
   , ((modMask, xK_Tab), nextWS)
+  , ((modMask .|. shiftMask, xK_Tab), prevWS)
 
   --Focus selected desktop
-  , ((controlMask .|. mod1Mask , xK_Left ), prevWS)
+  , ((controlMask .|. modMask , xK_Left ), prevWS)
 
   --Focus selected desktop
-  , ((controlMask .|. mod1Mask , xK_Right ), nextWS)
+  , ((controlMask .|. modMask , xK_Right ), nextWS)
 
   --  Reset the layouts on the current workspace to default.
-  , ((modMask .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)
+  , ((modMask .|. shiftMask, xK_t), setLayout $ XMonad.layoutHook conf)
 
   -- Move focus to the next window.
   , ((modMask, xK_j), windows W.focusDown)
@@ -201,13 +198,13 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((controlMask .|. shiftMask , xK_l), sendMessage Expand)
 
   -- Push window back into tiling.
-  , ((controlMask .|. shiftMask , xK_t), withFocused $ windows . W.sink)
+  , ((controlMask .|. shiftMask , xK_space), withFocused $ windows . W.sink)
 
   -- Increment the number of windows in the master area.
-  , ((controlMask .|. modMask, xK_Left), sendMessage (IncMasterN 1))
+  , ((controlMask .|. modMask, xK_Right), sendMessage (IncMasterN 1))
 
   -- Decrement the number of windows in the master area.
-  , ((controlMask .|. modMask, xK_Right), sendMessage (IncMasterN (-1)))
+  , ((controlMask .|. modMask, xK_Left), sendMessage (IncMasterN (-1)))
 
   ]
   ++
