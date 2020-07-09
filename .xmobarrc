@@ -23,7 +23,8 @@ Config {
    , persistent =       True    -- enable/disable hiding (True = disabled)
 
    , commands =
-      [ Run DynNetwork     [ "--template" , "<dev>: <tx>kB/s_<rx>kB/s"
+      [ Run UnsafeStdinReader
+        , Run DynNetwork     [ "--template" , "<dev>: <tx>kB/s_<rx>kB/s"
                              , "--Low"      , "1000"       -- units: B/s
                              , "--High"     , "5000"       -- units: B/s
                              , "--low"      , "darkgreen"

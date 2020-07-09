@@ -90,7 +90,7 @@ xmobarEscape = concatMap doubleLts
           doubleLts x = [x]
 
 myWorkspaces :: [String]
-myWorkspaces = clickable . (map xmobarEscape) $ ["\61612","\61899","\61947","\61635","\61502","\61501","\61705","\61564","\62150","\61872"]
+myWorkspaces = clickable . (map xmobarEscape) $ ["1","2","3","4","5","6","7","8","9","10"]
     where
                clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" | (i,ws) <- zip [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] l, let n = i ]
 
@@ -260,7 +260,26 @@ myStartupHook = return ()
 
 main = do
   xmproc <- spawnPipe "xmobar -x 0"
-  xmonad $ docks defaults
+  xmonad $ docks defaults {
+    logHook = dynamicLogWithPP $ def {
+      ppOutput = \x -> System.IO.hPutStrLn xmproc x,
+      ppCurrent = xmobarColor myNormalBorderColor "" . wrap """",
+      ppVisible = xmobarColor myFocusedBorderColor "" . wrap """",
+      ppHidden = wrap """",
+      ppHiddenNoWindows = xmobarColor "white" "",
+      ppUrgent = xmobarColor myFocusedBorderColor "",
+      ppSep = " ",
+      ppWsSep = " ",
+      ppLayout = (\ x -> case x of
+        "Spacing Tall"                 -> "<fn=1>Tall</fn>"
+        "Spacing Grid"                 -> "<fn=1>Grid</fn>"
+        "Spacing Spiral"               -> "<fn=1>spiral</fn>"
+        "Spacing ThreeCol"             -> "<fn=1>ThreeColMid</fn>"
+        "Spacing Full"                 -> "<fn=1>Full</fn>"
+        _                                         -> x)
+      
+    }
+  }
 
 -- | Finally, a copy of the default bindings in simple textual tabular format.
 help :: String
