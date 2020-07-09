@@ -75,7 +75,7 @@ myHiddenNoWindowsWSColor = "white"
 myLayoutHook = avoidStruts
                $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
                $ smartBorders
-               $ tiled ||| Grid ||| spiral (6/7) ||| ThreeColMid 1 (3/100) (1/2) ||| noBorders Full
+               $ ThreeCol 1 (3/100) (1/2) ||| tiled ||| Grid ||| spiral (6/7) ||| noBorders Full
                     where
                     tiled   = Tall nmaster delta ratio
                     nmaster = 1
@@ -192,10 +192,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((controlMask .|. modMask, xK_Up), windows W.swapUp  )
 
   -- Shrink the master area.
-  , ((controlMask .|. shiftMask , xK_h), sendMessage Shrink)
+  , ((modMask, xK_h), sendMessage Shrink)
 
   -- Expand the master area.
-  , ((controlMask .|. shiftMask , xK_l), sendMessage Expand)
+  , ((modMask, xK_l), sendMessage Expand)
 
   -- Push window back into tiling.
   , ((controlMask .|. shiftMask , xK_space), withFocused $ windows . W.sink)
@@ -217,7 +217,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
       , (\i -> W.greedyView i . W.shift i, shiftMask)]]
   ++
   [((m .|. controlMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-      | (key, sc) <- zip [xK_w, xK_e] [0..]
+      | (key, sc) <- zip [xK_u, xK_i] [0..]
       , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
