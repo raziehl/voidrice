@@ -50,10 +50,10 @@ mydefaults = def {
         , workspaces          = myWorkspaces
         , keys                = myKeys
         , modMask             = myModMask
-        , borderWidth         = 2
+        , borderWidth         = 0
         , layoutHook          = myLayoutHook
         , startupHook         = myStartupHook
-        , manageHook          = myManageHook
+        , manageHook          = manageDocks <+> myManageHook <+> manageHook desktopConfig
         , handleEventHook     = fullscreenEventHook <+> docksEventHook <+> minimizeEventHook
         }
 
@@ -71,11 +71,11 @@ myVisibleWSColor = "#aaaaaa" -- color of inactive workspace
 myUrgentWSColor = "#c91a1a" -- color of workspace with 'urgent' window
 myHiddenNoWindowsWSColor = "white"
 
-myLayoutHook = spacingRaw True (Border 0 5 5 5) True (Border 5 5 5 5) True $ gaps [(U,35), (D,5), (R,5), (L,5)]
-               $ avoidStruts
+-- spacingRaw True (Border 0 5 5 5) True (Border 5 5 5 5) True $ gaps [(U,35), (D,5), (R,5), (L,5)]
+myLayoutHook = avoidStruts
                $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
                $ smartBorders
-               $ tiled ||| Grid ||| spiral (6/7) ||| ThreeColMid 1 (3/100) (1/2) ||| noBorders Full
+               $ ThreeCol 1 (3/100) (1/2) ||| tiled ||| Grid ||| spiral (6/7) ||| noBorders Full
                     where
                     tiled   = Tall nmaster delta ratio
                     nmaster = 1
@@ -108,71 +108,15 @@ myManageHook = composeAll . concat $
     myTFloats = ["Downloads", "Save As..."]
     myRFloats = []
     myIgnores = ["desktop_window"]
-    -- my1Shifts = ["Chromium", "Vivaldi-stable", "Firefox"]
-    -- my2Shifts = []
-    -- my3Shifts = ["Inkscape"]
-    -- my4Shifts = []
-    -- my5Shifts = ["Gimp", "feh"]
-    -- my6Shifts = ["vlc", "mpv"]
-    -- my7Shifts = ["Virtualbox"]
-    -- my8Shifts = ["Thunar"]
-    -- my9Shifts = []
-    -- my10Shifts = ["discord"]
 
 -- keys config
-
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
-  [ ((modMask .|. shiftMask , xK_Return ), spawn $ "thunar")
-  , ((modMask .|. shiftMask , xK_d ), spawn $ "dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'")
-  , ((modMask .|. shiftMask , xK_r ), spawn $ "xmonad --recompile && xmonad --restart")
+  [ ((modMask, xK_d ), spawn $ "dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'")
+  , ((modMask, xK_c ), spawn $ "xmonad --recompile && xmonad --restart")
   , ((modMask .|. shiftMask , xK_q ), kill)
-  , ((modMask .|. shiftMask , xK_x ), io (exitWith ExitSuccess))
-
-  -- CONTROL + ALT KEYS
-
-  , ((controlMask .|. modMask , xK_Next ), spawn $ "conky-rotate -n")
-  , ((controlMask .|. modMask , xK_Prior ), spawn $ "conky-rotate -p")
-  , ((controlMask .|. modMask , xK_a ), spawn $ "xfce4-appfinder")
-  , ((controlMask .|. modMask , xK_b ), spawn $ "thunar")
-  , ((controlMask .|. modMask , xK_c ), spawn $ "catfish")
-  , ((controlMask .|. modMask , xK_e ), spawn $ "arcolinux-tweak-tool")
-  , ((controlMask .|. modMask , xK_f ), spawn $ "firefox")
-  , ((controlMask .|. modMask , xK_g ), spawn $ "chromium -no-default-browser-check")
-  , ((controlMask .|. modMask , xK_i ), spawn $ "nitrogen")
-  , ((controlMask .|. modMask , xK_k ), spawn $ "arcolinux-logout")
-  , ((controlMask .|. modMask , xK_l ), spawn $ "arcolinux-logout")
-  , ((controlMask .|. modMask , xK_m ), spawn $ "xfce4-settings-manager")
-  , ((controlMask .|. modMask , xK_o ), spawn $ "$HOME/.xmonad/scripts/picom-toggle.sh")
-  , ((controlMask .|. modMask , xK_p ), spawn $ "pamac-manager")
-  , ((controlMask .|. modMask , xK_r ), spawn $ "rofi-theme-selector")
-  , ((controlMask .|. modMask , xK_s ), spawn $ "spotify")
-  , ((controlMask .|. modMask , xK_t ), spawn $ "urxvt")
-  , ((controlMask .|. modMask , xK_u ), spawn $ "pavucontrol")
-  , ((controlMask .|. modMask , xK_v ), spawn $ "vivaldi-stable")
-  , ((controlMask .|. modMask , xK_w ), spawn $ "arcolinux-welcome-app")
-  , ((controlMask .|. modMask , xK_Return ), spawn $ "urxvt")
-
-  -- ALT + ... KEYS
-
-  , ((mod1Mask, xK_f), spawn $ "variety -f" )
-  , ((mod1Mask, xK_n), spawn $ "variety -n" )
-  , ((mod1Mask, xK_p), spawn $ "variety -p" )
-  , ((mod1Mask, xK_r), spawn $ "xmonad --restart" )
-  , ((mod1Mask, xK_t), spawn $ "variety -t" )
-  , ((mod1Mask, xK_Up), spawn $ "variety --pause" )
-  , ((mod1Mask, xK_Down), spawn $ "variety --resume" )
-  , ((mod1Mask, xK_Left), spawn $ "variety -p" )
-  , ((mod1Mask, xK_Right), spawn $ "variety -n" )
-  , ((mod1Mask, xK_F2), spawn $ "gmrun" )
-  , ((mod1Mask, xK_F3), spawn $ "xfce4-appfinder" )
-
-  --VARIETY KEYS WITH PYWAL
-
-  , ((mod1Mask .|. shiftMask , xK_f ), spawn $ "variety -f && wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)&")
-  , ((mod1Mask .|. shiftMask , xK_n ), spawn $ "variety -n && wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)&")
-  , ((mod1Mask .|. shiftMask , xK_p ), spawn $ "variety -p && wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)&")
-  , ((mod1Mask .|. shiftMask , xK_t ), spawn $ "variety -t && wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)&")
-  , ((mod1Mask .|. shiftMask , xK_u ), spawn $ "wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)&")
+  , ((modMask .|. shiftMask , xK_c ), io (exitWith ExitSuccess))
+  , ((modMask, xK_f), sendMessage $ Toggle NBFULL)
+  , ((modMask, xK_Return), spawn $ "urxvt" )
 
   --CONTROL + SHIFT KEYS
 
@@ -202,11 +146,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Decrease brightness
   , ((0, xF86XK_MonBrightnessDown), spawn $ "xbacklight -dec 5")
 
---  , ((0, xF86XK_AudioPlay), spawn $ "mpc toggle")
---  , ((0, xF86XK_AudioNext), spawn $ "mpc next")
---  , ((0, xF86XK_AudioPrev), spawn $ "mpc prev")
---  , ((0, xF86XK_AudioStop), spawn $ "mpc stop")
-
   , ((0, xF86XK_AudioPlay), spawn $ "playerctl play-pause")
   , ((0, xF86XK_AudioNext), spawn $ "playerctl next")
   , ((0, xF86XK_AudioPrev), spawn $ "playerctl previous")
@@ -217,22 +156,19 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   --  XMONAD LAYOUT KEYS
 
   -- Cycle through the available layout algorithms.
-  , ((modMask, xK_space), sendMessage NextLayout)
+  , ((modMask, xK_t), sendMessage NextLayout)
 
-  --Focus selected desktop
-  , ((mod1Mask, xK_Tab), nextWS)
-
-  --Focus selected desktop
   , ((modMask, xK_Tab), nextWS)
+  , ((modMask .|. shiftMask, xK_Tab), prevWS)
 
   --Focus selected desktop
-  , ((controlMask .|. mod1Mask , xK_Left ), prevWS)
+  , ((controlMask .|. modMask , xK_Left ), prevWS)
 
   --Focus selected desktop
-  , ((controlMask .|. mod1Mask , xK_Right ), nextWS)
+  , ((controlMask .|. modMask , xK_Right ), nextWS)
 
   --  Reset the layouts on the current workspace to default.
-  , ((modMask .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)
+  , ((modMask .|. shiftMask, xK_t), setLayout $ XMonad.layoutHook conf)
 
   -- Move focus to the next window.
   , ((modMask, xK_j), windows W.focusDown)
@@ -256,44 +192,32 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((controlMask .|. modMask, xK_Up), windows W.swapUp  )
 
   -- Shrink the master area.
-  , ((controlMask .|. shiftMask , xK_h), sendMessage Shrink)
+  , ((modMask, xK_h), sendMessage Shrink)
 
   -- Expand the master area.
-  , ((controlMask .|. shiftMask , xK_l), sendMessage Expand)
+  , ((modMask, xK_l), sendMessage Expand)
 
   -- Push window back into tiling.
-  , ((controlMask .|. shiftMask , xK_t), withFocused $ windows . W.sink)
+  , ((controlMask .|. shiftMask , xK_space), withFocused $ windows . W.sink)
 
   -- Increment the number of windows in the master area.
-  , ((controlMask .|. modMask, xK_Left), sendMessage (IncMasterN 1))
+  , ((controlMask .|. modMask, xK_Right), sendMessage (IncMasterN 1))
 
   -- Decrement the number of windows in the master area.
-  , ((controlMask .|. modMask, xK_Right), sendMessage (IncMasterN (-1)))
+  , ((controlMask .|. modMask, xK_Left), sendMessage (IncMasterN (-1)))
 
   ]
   ++
 
-  -- mod-[1..9], Switch to workspace N
-  -- mod-shift-[1..9], Move client to workspace N
   [((m .|. modMask, k), windows $ f i)
 
-  --Keyboard layouts
-  --qwerty users use this line
    | (i, k) <- zip (XMonad.workspaces conf) [xK_1,xK_2,xK_3,xK_4,xK_5,xK_6,xK_7,xK_8,xK_9,xK_0]
-
-  --French Azerty users use this line
-  -- | (i, k) <- zip (XMonad.workspaces conf) [xK_ampersand, xK_eacute, xK_quotedbl, xK_apostrophe, xK_parenleft, xK_minus, xK_egrave, xK_underscore, xK_ccedilla , xK_agrave]
-
-  --Belgian Azerty users use this line
-  --   | (i, k) <- zip (XMonad.workspaces conf) [xK_ampersand, xK_eacute, xK_quotedbl, xK_apostrophe, xK_parenleft, xK_section, xK_egrave, xK_exclam, xK_ccedilla, xK_agrave]
 
       , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)
       , (\i -> W.greedyView i . W.shift i, shiftMask)]]
   ++
-  -- ctrl-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
-  -- ctrl-shift-{w,e,r}, Move client to screen 1, 2, or 3
   [((m .|. controlMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-      | (key, sc) <- zip [xK_w, xK_e] [0..]
+      | (key, sc) <- zip [xK_u, xK_i] [0..]
       , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
@@ -311,7 +235,6 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 
 --XMOBAR
 main = do
-
         xmproc0 <- spawnPipe "xmobar -x 0 $HOME/.xmobarrc" -- xmobar monitor 1
         xmproc1 <- spawnPipe "xmobar -x 1 $HOME/.xmobarrc" -- xmobar monitor 2
         xmonad $ ewmh $ mydefaults {
