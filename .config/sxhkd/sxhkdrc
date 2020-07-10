@@ -272,3 +272,10 @@ super + shift + n
 	bspc node focused -t \~floating ; hover right
 super + shift + b
 	bspc node focused -t \~floating ; hover left
+
+# Mouse volume
+button10
+	pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send --expire-time=100 '墳 '$(pulsevolume)
+
+button11
+	pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send --expire-time=100 ' '$(pulsevolume)

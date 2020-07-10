@@ -46,6 +46,7 @@ import qualified System.IO
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 import qualified Data.ByteString as B
+import XMonad.Hooks.InsertPosition 
 
 myTerminal            = "urxvt"
 myBorderWidth         = 0
@@ -219,7 +220,7 @@ myManageHook = composeAll
     , resource  =? "kdesktop"       --> doIgnore
     , className =? "Gimp"     --> doFloat
     , className =? "rdesktop" --> doFloat
-    ]
+    ] <+> insertPosition Below Newer
 
 ------------------------------------------------------------------------
 -- Event handling
@@ -266,7 +267,7 @@ main = do
       ppCurrent = xmobarColor myNormalBorderColor "" . wrap """",
       ppVisible = xmobarColor myFocusedBorderColor "" . wrap """",
       ppHidden = wrap """",
-      ppHiddenNoWindows = xmobarColor "white" "",
+      ppHiddenNoWindows = xmobarColor "#262626" "",
       ppUrgent = xmobarColor myFocusedBorderColor "",
       ppSep = " ",
       ppWsSep = " ",
