@@ -117,6 +117,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_z     ),     toggleWS)
     , ((modm,               xK_j     ), windows W.focusDown)
     , ((modm,               xK_k     ), windows W.focusUp  )
+    , ((modm,               xK_Up     ), windows W.focusUp  )
+    , ((modm,               xK_Down     ), windows W.focusDown)
     , ((modm,               xK_m     ), windows W.focusMaster  )
     , ((modm, xK_space), windows W.swapMaster)
     , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
