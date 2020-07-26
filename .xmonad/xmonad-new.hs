@@ -75,7 +75,7 @@ myHiddenNoWindowsWSColor = "white"
 myLayoutHook = avoidStruts
                $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
                $ smartBorders
-               $ ThreeCol 1 (3/100) (1/2) ||| tiled ||| Grid ||| spiral (6/7) ||| noBorders Full
+               $ tiled ||| Grid ||| ThreeCol 1 (3/100) (1/2) ||| spiral (6/7) ||| noBorders Full
                     where
                     tiled   = Tall nmaster delta ratio
                     nmaster = 1

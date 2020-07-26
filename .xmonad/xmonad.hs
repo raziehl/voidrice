@@ -46,7 +46,10 @@ import qualified System.IO
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 import qualified Data.ByteString as B
-import XMonad.Hooks.InsertPosition 
+import XMonad.Hooks.InsertPosition
+import XMonad.Layout.Maximize
+import XMonad.Actions.Minimize
+import XMonad.Util.NamedScratchpad
 
 myTerminal            = "urxvt"
 myBorderWidth         = 0
@@ -96,12 +99,28 @@ myWorkspaces = clickable . (map xmobarEscape) $ ["1","2","3","4","5","6","7","8"
                clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" | (i,ws) <- zip [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] l, let n = i ]
 
 
+-- SCRATCHPADS
+
+myScratchPads = [NS "terminal" spawnTerm findTerm manageTerm
+                ]
+
+    where
+    spawnTerm = myTerminal ++ "-n scratchpad"
+    findTerm = resource =? "scratchpad"
+    manageTerm = customFloating $ W.RationalRect l t w h
+                where
+                h = 0.9
+                w = 0.9
+                t = 0.95 -h
+                l = 0.95 -w
+
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm, xK_Return), spawn $ XMonad.terminal conf)
     , ((modm,               xK_d     ), spawn "dmenu_run")
+    , ((modm,               xK_q     ), spawn "kill -s USR1 $(pidof deadd-notification-center)")
     , ((modm .|. shiftMask, xK_q     ), kill)
     , ((modm,               xK_t ), sendMessage NextLayout)
     --  Reset the layouts on the current workspace to default
@@ -114,11 +133,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask,               xK_Left),  prevWS)
     , ((modm .|. controlMask .|. shiftMask, xK_Right), shiftToNext)
     , ((modm .|. controlMask .|. shiftMask, xK_Left),  shiftToPrev)
-    , ((modm,               xK_z     ),     toggleWS)
-    , ((modm,               xK_j     ), windows W.focusDown)
-    , ((modm,               xK_k     ), windows W.focusUp  )
-    , ((modm,               xK_Up     ), windows W.focusUp  )
-    , ((modm,               xK_Down     ), windows W.focusDown)
+    , ((modm,                               xK_z     ),     toggleWS)
+    , ((modm,                               xK_j     ), windows W.focusDown)
+    , ((modm,                               xK_k     ), windows W.focusUp  )
+    , ((modm,                               xK_Up     ), windows W.focusUp  )
+    , ((modm,                               xK_Down     ), windows W.focusDown)
+    , ((mod1Mask,                           xK_Tab     ), windows W.focusDown  )
+    , ((mod1Mask .|. shiftMask,             xK_Tab     ), windows W.focusUp)
     , ((modm,               xK_m     ), windows W.focusMaster  )
     , ((modm, xK_space), windows W.swapMaster)
     , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
@@ -128,6 +149,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_a     ), sendMessage Expand)
     , ((modm .|. shiftMask,               xK_a     ), sendMessage Shrink)
     , ((modm .|. shiftMask, xK_space     ), withFocused $ windows . W.sink)
+    , ((modm,               xK_minus     ), withFocused minimizeWindow)
+    , ((modm .|. shiftMask, xK_minus     ), withLastMinimized maximizeWindowAndFocus)
+
+    
     -- Increment the number of windows in the master area
     , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
     -- Deincrement the number of windows in the master area
@@ -139,9 +164,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_f), sendMessage $ Toggle NBFULL)
 
 
-    , ((0, xK_Print), spawn $ "scrot 'ArcoLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'")
-    , ((controlMask, xK_Print), spawn $ "xfce4-screenshooter" )
-    , ((controlMask .|. shiftMask , xK_Print ), spawn $ "gnome-screenshot -i")
+    , ((0, xK_Print), spawn $ "scrot '%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f ~/Pictures'")
+    -- , ((modm .|. shiftMask, xK_Print), spawn $ "scrot '%Y-%m-%d-%s_screenshot_$wx$h.jpg' -s -e 'mv $f ~/Pictures'")
     ]
     ++
 
@@ -192,7 +216,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 myLayout = avoidStruts
                $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
                $ smartBorders
-               $ ThreeCol 1 (3/100) (1/2) ||| tiled ||| Grid ||| spiral (6/7) ||| noBorders Full
+               $ tiled ||| ThreeCol 1 (3/100) (1/2) ||| Grid ||| spiral (6/7) ||| noBorders Full
                     where
                     tiled   = Tall nmaster delta ratio
                     nmaster = 1

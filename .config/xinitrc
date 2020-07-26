@@ -19,9 +19,16 @@
 # check the i3blocks line above.
 # ssh-agent dwm
 
-trayer --align right --SetDockType true --SetPartialStrut true --expand true --width 10 --transparent true --alpha 70 --height 17 --tint 0x000000 &
+trayer --align right --SetDockType true --SetPartialStrut true --expand true --width 10 --transparent true --alpha 70 --height 18 --tint 0x000000 &
 nm-applet &
 volumeicon &
+wallset -I 1 &
+
+xfce4-power-manager &
+
+setxkbmap ro &
+
+deadd-notification-center &
 
 exec xmonad
 

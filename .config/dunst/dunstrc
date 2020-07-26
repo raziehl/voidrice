@@ -38,7 +38,7 @@
     #   %n  progress value if set without any extra characters
     #   %%  Literal %
     # Markup is allowed
-    format = "<b>%s</b>\n%b"
+    format = "<b>%s</b>\n%p"
 
     alignment = left
     show_age_threshold = 60
@@ -82,14 +82,16 @@
     #icon = /path/to/icon
 
 [urgency_normal]
-    background = "#458588"
-    foreground = "#ebdbb2"
+    background = "#000000"
+    #foreground = "#ebdbb2"
+    foreground = "#404040"
+    frame_color = "#000000"
     timeout = 5
 
 [urgency_critical]
     background = "#cc2421"
     foreground = "#ebdbb2"
-    frame_color = "#fabd2f"
+    #frame_color = "#fabd2f"
     timeout = 0
 
 # Every section that isn't one of the above is interpreted as a rules to

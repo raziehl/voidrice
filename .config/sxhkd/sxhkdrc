@@ -35,6 +35,9 @@ super + w
 super + shift + w
 	$BROWSER
 
+shift + alt + c
+	(setxkbmap -query | grep -q "layout:\s\+us") && setxkbmap ro || setxkbmap us
+
 # Et cetera...
 super + grave
 	dmenuunicode

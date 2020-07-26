@@ -7,7 +7,8 @@ Config {
    , position =     BottomW L 90
   --  , border =       BottomB
    , borderColor =  "#646464"
-   , alpha =        700
+  -- Xmobar crashes with native transparency and video wallpaper
+  -- , alpha =        700
 
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text

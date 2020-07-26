@@ -1,6 +1,10 @@
 
 # Aliases
-alias gotop="gotop -c mine"
+
+# Terminal
+alias terminal="urxvt&disown"
+
+#alias gotop="gotop -c mine"
 # alias feh="feh --scale-down --auto-zoom"
 alias feh="feh --edit"
 
@@ -25,7 +29,7 @@ fi
 
 alias pqiv="pqiv -c -i"
 alias less="less -r"
-alias grep="grep --color=always" 
+alias grep="grep --color=always"
 
 alias static='P=( " " █ ░ ▒ ▓ );while :;do printf "\e[$[RANDOM%LINES+1];$[RANDOM%COLUMNS+1]f${P[$RANDOM%5]}";done|lolcat'
 
@@ -72,7 +76,7 @@ compile() {
 }
 
 javarun() {
-	java $@ 
+	java $@
 #	javac $1
 }
 
@@ -82,4 +86,3 @@ stty -ixon
 hdmi2-b-up() {
         xrandr --output HDMI2 --brightness 1.2
 }
-
