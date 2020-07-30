@@ -9,6 +9,7 @@
 export PATH="$PATH:$(du "$HOME/.local/bin/" | cut -f2 | paste -sd ':')"
 
 export PATH=$PATH:/home/raziel/.config/scripts
+export GOPATH=~/.go
 
 # Default programs:
 # export EDITOR="nvim"

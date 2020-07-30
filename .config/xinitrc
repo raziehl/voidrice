@@ -28,8 +28,6 @@ xfce4-power-manager &
 
 setxkbmap ro &
 
-deadd-notification-center &
-
 exec xmonad
 
 # ssh-agent i3
