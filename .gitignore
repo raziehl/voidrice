@@ -46,6 +46,7 @@
 !.sounds/*
 !.sounds/tiberian/*
 !.zshrc
+!.wallpapers/**
 # Ignore These Though
 # .config
 .cache
