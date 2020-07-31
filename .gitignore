@@ -42,6 +42,7 @@
 !.config/mimeapps.list.mine
 !.config/gotop/*
 !.config/Xresources-themes/*
+!.config/deadd/*
 !.nustall_history
 !.config/rc-libs/*
 !.sounds/*
