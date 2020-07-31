@@ -3,7 +3,7 @@
 !*/
 .notes
 # But Not These Files
-!Videos/anim-walls/*
+!Videos/anim-walls/space-man-diner-closeup.mp4
 
 !.xmonad/*
 !.config/xmobar/*
