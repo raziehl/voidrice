@@ -31,6 +31,7 @@
 !.config/scripts/**
 !.config/flashfocus/*
 !.config/zathura/*
+!.config/picom.conf
 #!.config/scripts/node/*
 !.vim/autoload/*
 !.vim/bundle
