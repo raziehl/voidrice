@@ -3,6 +3,8 @@
 !*/
 .notes
 # But Not These Files
+!Videos/anim-walls/*
+
 !.xmonad/*
 !.config/xmobar/*
 !.xmobarrc
@@ -46,6 +48,7 @@
 !.sounds/*
 !.sounds/tiberian/*
 !.zshrc
+
 # Ignore These Though
 # .config
 .cache
