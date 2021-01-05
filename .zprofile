@@ -14,7 +14,7 @@ export GOPATH=~/.go
 # Default programs:
 # export EDITOR="nvim"
 export TERMINAL="urxvt"
-export BROWSER="brave"
+export BROWSER="vivaldi-stable"
 export READER="zathura"
 
 

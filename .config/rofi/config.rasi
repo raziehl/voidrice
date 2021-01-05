@@ -1,0 +1,13 @@
+configuration {
+ modi: "window,run,ssh,combi";
+ font: "hack 10";
+ color-window: "#000000, #000000, #000000";
+ color-normal: "#000000, #00FF00, #000000, #73004a, #000000";
+ color-active: "#000000, #b1b4b3, #222222, #007763, #b1b4b3";
+ color-urgent: "#222222, #b1b4b3, #222222, #77003d, #b1b4b3";
+ kb-row-select: "Tab";
+ kb-row-tab: "";
+ show-icons: true;
+ icon-theme: "RevengeShip";
+ combi-modi: "window,run,ssh";
+}

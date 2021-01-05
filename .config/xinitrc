@@ -22,7 +22,7 @@
 trayer --align right --SetDockType true --SetPartialStrut true --expand true --width 10 --transparent true --alpha 70 --height 18 --tint 0x000000 &
 nm-applet &
 volumeicon &
-wallset -I 1 &
+#wallset -I 1 &
 
 xfce4-power-manager &
 

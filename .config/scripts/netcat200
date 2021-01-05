@@ -1,0 +1,24 @@
+#!/bin/bash
+#  sudo ncat -l 0.0.0.0 1299 -c 'echo "HTTP/1.1 200 OK\n\n $(asterisk -rx "smpp show peers")"' -k & disown
+
+helpFunction()
+{
+   echo ""
+   echo "Usage: $0 -a parameterA -b parameterB -c parameterC"
+   echo -e "\t-p Port to run netcat on"
+   echo -e "\t-c Command to run on request"
+   exit 1 # Exit script after printing help
+}
+
+PORT=3001
+
+while getopts "p:c:" opt
+do
+   case "$opt" in
+      p ) PORT="$OPTARG" ;;
+      c ) COMMAND="$OPTARG" ;;
+      ? ) helpFunction ;; # Print helpFunction in case parameter is non-existent
+   esac
+done
+
+ncat -l $PORT -c 'echo "HTTP/1.1 200 OK\n\n $($COMMAND)"' -k

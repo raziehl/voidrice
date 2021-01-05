@@ -119,10 +119,11 @@ myScratchPads = [NS "terminal" spawnTerm findTerm manageTerm
 --
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm, xK_Return), spawn $ XMonad.terminal conf)
-    , ((modm,               xK_d     ), spawn "dmenu_run")
+    , ((modm,               xK_d     ), spawn "rofi -show combi")
     , ((modm,               xK_q     ), spawn "kill -s USR1 $(pidof deadd-notification-center)")
     , ((modm .|. shiftMask, xK_q     ), kill)
     , ((modm,               xK_t ), sendMessage NextLayout)
+    , ((modm, xK_b     ), sendMessage ToggleStruts)
     --  Reset the layouts on the current workspace to default
     , ((modm .|. shiftMask, xK_t ), setLayout $ XMonad.layoutHook conf)
     -- Resize viewed windows to the correct size
@@ -133,7 +134,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask,               xK_Left),  prevWS)
     , ((modm .|. controlMask .|. shiftMask, xK_Right), shiftToNext)
     , ((modm .|. controlMask .|. shiftMask, xK_Left),  shiftToPrev)
-    , ((modm,                               xK_z     ),     toggleWS)
+    , ((modm,                               xK_w     ),     toggleWS)
     , ((modm,                               xK_j     ), windows W.focusDown)
     , ((modm,                               xK_k     ), windows W.focusUp  )
     , ((modm,                               xK_Up     ), windows W.focusUp  )
@@ -183,7 +184,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
     --
     [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
-        | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+        | (key, sc) <- zip [xK_z, xK_e, xK_r] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 
@@ -216,7 +217,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 myLayout = avoidStruts
                $ mkToggle (NBFULL ?? NOBORDERS ?? EOT)
                $ smartBorders
-               $ tiled ||| ThreeCol 1 (3/100) (1/2) ||| Grid ||| spiral (6/7) ||| noBorders Full
+               $ tiled ||| ThreeColMid 1 (3/100) (1/2)  ||| ThreeCol 1 (3/100) (1/2) ||| Grid ||| spiral (6/7) ||| noBorders Full
                     where
                     tiled   = Tall nmaster delta ratio
                     nmaster = 1
@@ -240,13 +241,15 @@ myLayout = avoidStruts
 -- 'className' and 'resource' are used below.
 --
 myManageHook = composeAll
-    [ className =? "MPlayer"        --> doFloat
-    , className =? "Gimp"           --> doFloat
+    [ className =? "MPlayer"        --> doCenterFloat
+    , className =? "Gimp"           --> doCenterFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
-    , className =? "Gimp"     --> doFloat
-    , className =? "rdesktop" --> doFloat
-    ] <+> insertPosition Below Newer
+    , className =? "Gimp"           --> doCenterFloat
+    , className =? "rdesktop"       --> doCenterFloat
+    , resource  =? "Dialog"         --> doCenterFloat
+    ]
+    --  <+> insertPosition Below Newer
 
 ------------------------------------------------------------------------
 -- Event handling

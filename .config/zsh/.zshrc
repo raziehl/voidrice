@@ -130,3 +130,8 @@ zstyle ':completion:*' rehash true
 
 # Load zsh-syntax-highlighting; should be last.
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+
+# Activate Python Envs
+function activate(){
+    . /home/$USER/.envs/$1/bin/activate
+}

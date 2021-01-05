@@ -50,7 +50,9 @@ URxvt.keysym.C-slash:  font-size:show
 Xcursor.theme: Adwaita
 Xcursor.size:                     0
 
-URxvt.font: xft:Hack Nerd Font Mono:size=8
+!URxvt.font: xft:Victor Mono Nerd Font Complete Mono:size=8
+
+URxvt.font: xft:Hack Nerd Font Mono:size=8, xft:DejaVuSansMono Nerd Font
 
 !URxvt.font:                       9x15,xft:TerminessTTFNerdFontMono
 !URxvt.font: xft:monospace:size=9

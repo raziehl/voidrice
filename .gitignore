@@ -20,6 +20,8 @@
 !.config/dunst/*
 !.config/mimeapps.list
 !.config/sxhkd/sxhkdrc
+!.config/rofi/config.rasi
+!.config/rofi/dump.rasi
 !.layouts/*
 !.Xresources
 !.bashrc

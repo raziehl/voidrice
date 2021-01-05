@@ -9,7 +9,7 @@ alias terminal="urxvt&disown"
 alias feh="feh --edit"
 
 #alias ls="ls -l --color=auto | grep '^d' && ls -l --color=auto | grep -v '^d'"
-alias ls="ls -l --color=auto -h --group-directories-first"
+alias ls="ls --color=auto -h --group-directories-first"
 
 alias iftop="sudo iftop -P -i wlp2s0"
 
@@ -32,6 +32,10 @@ alias less="less -r"
 alias grep="grep --color=always"
 
 alias static='P=( " " █ ░ ▒ ▓ );while :;do printf "\e[$[RANDOM%LINES+1];$[RANDOM%COLUMNS+1]f${P[$RANDOM%5]}";done|lolcat'
+
+alias vipe=": | vipe"
+
+alias ledger="~/Desktop/ledger-live-desktop-2.15.0-linux-x86_64.AppImage --no-sandbox"
 
 # Functions
 latex-rmd() {

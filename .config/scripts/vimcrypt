@@ -1,0 +1,9 @@
+#!/bin/bash
+
+BASE64=`openssl enc -A -aes256 -base64 -md md5`
+echo \# Decrypt this message by running:
+echo \# ================================
+echo
+echo echo $BASE64 \| openssl enc -d -aes256 -base64 -md md5 -A
+echo
+echo \# ================================
